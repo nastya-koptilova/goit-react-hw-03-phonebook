@@ -12,6 +12,24 @@ export class App extends Component {
     filter: '',
   };
 
+  componentDidMount() {
+    try {
+      const getLocalContacts = JSON.parse(localStorage.getItem('contacts'));
+      this.setState({contacts: getLocalContacts,})
+    } catch (error) {
+      console.error('Get state error: ', error.message);
+    }
+  }
+
+  componentDidUpdate() {
+    try {
+      const setLocalContacts = JSON.stringify(this.state.contacts);
+      localStorage.setItem('contacts', setLocalContacts)
+    } catch (error) {
+      console.error('Set state error: ', error.message);
+    }
+  }
+
   addContact = (contacts, name) => {
     if (this.state.contacts.some(el => el.name === name)) {
       alert(`${name} is already in contacts!`);
