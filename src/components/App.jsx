@@ -15,6 +15,7 @@ export class App extends Component {
   componentDidMount() {
     try {
       const getLocalContacts = JSON.parse(localStorage.getItem('contacts'));
+      if (getLocalContacts === null) {return}
       this.setState({contacts: getLocalContacts,})
     } catch (error) {
       console.error('Get state error: ', error.message);
