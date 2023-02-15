@@ -26,9 +26,7 @@ export class Form extends Component {
       tel: this.state.tel,
     };
 
-    const name = contact.name;
-
-    this.props.onAddContact(contact, name);
+    this.props.onAddContact(contact);
 
     this.reset();
   };

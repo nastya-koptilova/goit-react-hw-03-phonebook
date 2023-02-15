@@ -15,33 +15,31 @@ export class App extends Component {
   };
 
   componentDidMount() {
-    try {
-      const getLocalContacts = JSON.parse(localStorage.getItem(LOCAL_KEY));
-      if (getLocalContacts === null) {return}
-      this.setState({contacts: getLocalContacts,})
-    } catch (error) {
-      console.error('Get state error: ', error.message);
+    const getLocalContacts = JSON.parse(localStorage.getItem(LOCAL_KEY));
+    if (getLocalContacts === null) {
+      return;
     }
+    this.setState({ contacts: getLocalContacts });
   }
 
-  componentDidUpdate() {
-    try {
+  componentDidUpdate(_, prevState) {
+    if (prevState.contacts !== this.state.contacts) {
       const setLocalContacts = JSON.stringify(this.state.contacts);
-      localStorage.setItem(LOCAL_KEY, setLocalContacts)
-    } catch (error) {
-      console.error('Set state error: ', error.message);
+      localStorage.setItem(LOCAL_KEY, setLocalContacts);
     }
   }
 
-  addContact = (contacts, name) => {
-    if (this.state.contacts.some(el => el.name === name)) {
-      alert(`${name} is already in contacts!`);
+  addContact = contacts => {
+    if (this.state.contacts.some(el => el.name === contacts.name)) {
+      alert(`${contacts.name} is already in contacts!`);
       return;
     }
     const contactsList = { id: nanoid(), ...contacts };
     this.setState({
       contacts: [contactsList, ...this.state.contacts],
     });
+    const setLocalContacts = JSON.stringify(this.state.contacts);
+    localStorage.setItem(LOCAL_KEY, setLocalContacts);
   };
 
   searchContact = event => {
