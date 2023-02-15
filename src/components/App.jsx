@@ -6,6 +6,8 @@ import { Contacts } from './Contacts/Contacts';
 import { Filter } from './Filter/Filter';
 import css from './App.module.css';
 
+const LOCAL_KEY = 'contacts';
+
 export class App extends Component {
   state = {
     contacts: [],
@@ -14,7 +16,7 @@ export class App extends Component {
 
   componentDidMount() {
     try {
-      const getLocalContacts = JSON.parse(localStorage.getItem('contacts'));
+      const getLocalContacts = JSON.parse(localStorage.getItem(LOCAL_KEY));
       if (getLocalContacts === null) {return}
       this.setState({contacts: getLocalContacts,})
     } catch (error) {
@@ -25,7 +27,7 @@ export class App extends Component {
   componentDidUpdate() {
     try {
       const setLocalContacts = JSON.stringify(this.state.contacts);
-      localStorage.setItem('contacts', setLocalContacts)
+      localStorage.setItem(LOCAL_KEY, setLocalContacts)
     } catch (error) {
       console.error('Set state error: ', error.message);
     }
