@@ -23,7 +23,7 @@ export class App extends Component {
   }
 
   componentDidUpdate(_, prevState) {
-    if (prevState.contacts !== this.state.contacts) {
+    if (prevState.contacts.length !== this.state.contacts.length) {
       const setLocalContacts = JSON.stringify(this.state.contacts);
       localStorage.setItem(LOCAL_KEY, setLocalContacts);
     }
@@ -38,8 +38,6 @@ export class App extends Component {
     this.setState({
       contacts: [contactsList, ...this.state.contacts],
     });
-    const setLocalContacts = JSON.stringify(this.state.contacts);
-    localStorage.setItem(LOCAL_KEY, setLocalContacts);
   };
 
   searchContact = event => {
